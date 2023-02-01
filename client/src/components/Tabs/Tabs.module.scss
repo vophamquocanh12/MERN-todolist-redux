@@ -1,0 +1,17 @@
+.button{
+    margin: 0 10px;
+    padding: 10px;
+    font-size: 14px;
+    color: #6c6777;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.button.selected{
+    color: #fff;
+    background-color: #6c6777;
+}

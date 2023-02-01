@@ -1,0 +1,17 @@
+@import 'normalize.css';
+
+:root {
+    //text
+    --text-black: #000;
+    --text-white: #fff;
+}
+body {
+    width: 50%;
+    margin: 0 auto;
+}
+
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}

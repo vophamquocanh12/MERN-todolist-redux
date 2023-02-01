@@ -1,0 +1,41 @@
+.task {
+    font-size: 20px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #34495e;
+    line-height: 35px;
+    justify-items: center;
+    overflow-x: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task span {
+    color: #FFFFFF;
+}
+
+.icon {
+    float: right;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    justify-items: center;
+    &.delete:hover{
+        color: #f60000;
+    }
+    &.edit:hover{
+        color: #2df600;
+    }
+    
+}
+
+
+.edit-todo {
+    width: 85%;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ffffff;
+}
