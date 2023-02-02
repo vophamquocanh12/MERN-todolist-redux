@@ -2,14 +2,16 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames/bind'
 
-import styles from './Todo.module.scss'
+import styles from './TodoItem.module.scss'
 import { toggleTodo, updateTodo, deleteTodo } from '~/redux/actions'
+import { ModalItem } from '~/components'
 
 const cx = classNames.bind(styles)
 
 const Todo = ({ todo }) => {
     const [editing, setEditing] = useState(false)
     const [text, setText] = useState(todo.data)
+    const [modalOpen, setModalOpen] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -26,16 +28,22 @@ const Todo = ({ todo }) => {
         e.stopPropagation()
     }, [])
 
-    const onClickDeleteTodo = useCallback((e) => {
-        dispatch(deleteTodo(todo._id))
+    const onOpenModal = useCallback((e) => {
+        setModalOpen(true)
         e.stopPropagation()
+    }, [])
+
+    const onClickDeleteTodo = useCallback(() => {
+        setModalOpen(false)
+        dispatch(deleteTodo(todo._id))
+        console.log('hello')
     }, [dispatch, todo._id])
 
     useEffect(() => {
-        if(editing){
+        if (editing) {
             inputRef.current.focus()
         }
-    }, [editing]);
+    }, [editing])
 
     return (
         <li
@@ -46,28 +54,31 @@ const Todo = ({ todo }) => {
             style={{
                 textDecoration: todo.done ? 'line-through' : '',
                 color: todo.done ? '#fff' : '#34495e',
-                backgroundColor: todo.done ? '#37325c8f' : '#37325ce4'
+                backgroundColor: todo.done ? '#37325c8f' : '#37325ce4',
             }}
         >
             <span style={{ display: editing ? 'none' : '' }}>{todo.data}</span>
 
             <form style={{ display: editing ? 'inline' : 'none' }} onSubmit={onFormSubmit}>
-                <input type="text" value={text} ref={inputRef} className={cx('edit-todo')} onChange={(e) => setText(e.target.value)} onClick={(e) => e.stopPropagation()} />
+                <input
+                    type="text"
+                    value={text}
+                    ref={inputRef}
+                    className={cx('edit-todo')}
+                    onChange={(e) => setText(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                />
             </form>
 
-            <span
-                className={cx('icon', 'delete')}
-                onClick={onClickDeleteTodo}
-            >
+            <span className={cx('icon', 'delete')} onClick={onOpenModal}>
                 <i className="fas fa-trash" />
             </span>
 
-            <span
-                className={cx('icon', 'edit')}
-                onClick={onClickEditTodo}
-            >
+            <span className={cx('icon', 'edit')} onClick={onClickEditTodo}>
                 <i className="fas fa-pen" />
             </span>
+
+            {modalOpen && <ModalItem setOpenModal={setModalOpen} onDelete={onClickDeleteTodo} todo={todo} />}
         </li>
     )
 }
