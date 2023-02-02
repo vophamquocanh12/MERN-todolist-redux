@@ -45,7 +45,8 @@ const Todo = ({ todo }) => {
             }}
             style={{
                 textDecoration: todo.done ? 'line-through' : '',
-                color: todo.done ? '#bdc3c7' : '#34495e',
+                color: todo.done ? '#fff' : '#34495e',
+                backgroundColor: todo.done ? '#37325c8f' : '#37325ce4'
             }}
         >
             <span style={{ display: editing ? 'none' : '' }}>{todo.data}</span>
