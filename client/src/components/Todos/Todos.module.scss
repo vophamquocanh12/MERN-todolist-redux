@@ -2,6 +2,11 @@
     display: grid;
 }
 
+.scroll{
+    height: 500px;
+    overflow-y: scroll;
+}
+
 .button{
     margin: 0 10px;
     padding: 10px;

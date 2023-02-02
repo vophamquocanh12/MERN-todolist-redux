@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames/bind'
 
@@ -13,16 +13,36 @@ const Todo = ({ todo }) => {
 
     const dispatch = useDispatch()
 
+    const inputRef = useRef(null)
+
     const onFormSubmit = (e) => {
         e.preventDefault()
         setEditing((prevState) => !prevState)
         dispatch(updateTodo(todo._id, text))
     }
 
+    const onClickEditTodo = useCallback((e) => {
+        setEditing((prevState) => !prevState)
+        e.stopPropagation()
+    }, [])
+
+    const onClickDeleteTodo = useCallback((e) => {
+        dispatch(deleteTodo(todo._id))
+        e.stopPropagation()
+    }, [dispatch, todo._id])
+
+    useEffect(() => {
+        if(editing){
+            inputRef.current.focus()
+        }
+    }, [editing]);
+
     return (
         <li
             className={cx('task')}
-            onClick={() => dispatch(toggleTodo(todo._id))}
+            onClick={() => {
+                dispatch(toggleTodo(todo._id))
+            }}
             style={{
                 textDecoration: todo.done ? 'line-through' : '',
                 color: todo.done ? '#bdc3c7' : '#34495e',
@@ -31,14 +51,20 @@ const Todo = ({ todo }) => {
             <span style={{ display: editing ? 'none' : '' }}>{todo.data}</span>
 
             <form style={{ display: editing ? 'inline' : 'none' }} onSubmit={onFormSubmit}>
-                <input type="text" value={text} className={cx('edit-todo')} onChange={(e) => setText(e.target.value)} />
+                <input type="text" value={text} ref={inputRef} className={cx('edit-todo')} onChange={(e) => setText(e.target.value)} onClick={(e) => e.stopPropagation()} />
             </form>
 
-            <span className={cx('icon', 'delete')} onClick={() => dispatch(deleteTodo(todo._id))}>
+            <span
+                className={cx('icon', 'delete')}
+                onClick={onClickDeleteTodo}
+            >
                 <i className="fas fa-trash" />
             </span>
 
-            <span className={cx('icon', 'edit')} onClick={() => setEditing((prevState) => !prevState)}>
+            <span
+                className={cx('icon', 'edit')}
+                onClick={onClickEditTodo}
+            >
                 <i className="fas fa-pen" />
             </span>
         </li>

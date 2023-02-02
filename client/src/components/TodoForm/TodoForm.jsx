@@ -16,8 +16,11 @@ const TodoForm = () => {
 
     const onFormSubmit = (e) => {
         e.preventDefault()
-        dispatch(addNewTodo(text))
         setText('')
+        if(!text){
+            return 
+        }   
+        dispatch(addNewTodo(text))
     }
 
     const onInputChange = (e) => {

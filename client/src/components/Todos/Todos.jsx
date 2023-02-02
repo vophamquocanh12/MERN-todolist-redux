@@ -52,7 +52,7 @@ const Todos = () => {
                 ) : null}
             </div>
 
-            <ul>
+            <ul className={cx('scroll')}>
                 {getTodos().map((todo) => (
                     <Todo key={todo._id} todo={todo} />
                 ))}

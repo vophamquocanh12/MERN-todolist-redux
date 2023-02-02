@@ -8,6 +8,7 @@
     overflow-x: hidden;
     border-radius: 5px;
     cursor: pointer;
+    z-index: 1;
 }
 
 .task span {
@@ -21,6 +22,7 @@
     text-align: center;
     line-height: 35px;
     justify-items: center;
+    z-index: 10;
     &.delete:hover{
         color: #f60000;
     }
@@ -33,7 +35,7 @@
 
 .edit-todo {
     width: 85%;
-    font-size: 16px;
+    font-size: 18px;
     color: #ffffff;
     background-color: transparent;
     border: none;
